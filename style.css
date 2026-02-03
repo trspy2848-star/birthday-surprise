@@ -1,1 +1,19 @@
-placeholder
+const messages = [
+  "Hey 👋",
+  "Today is a special day 🎉",
+  "You make people around you happier 💖",
+  "Never forget how amazing you are ✨",
+  "Happy Birthday 🎂💫"
+];
+
+let index = 0;
+
+function nextMessage() {
+  const messageEl = document.getElementById("message");
+  messageEl.innerText = messages[index];
+  index++;
+
+  if (index === messages.length) {
+    index = 0;
+  }
+}
