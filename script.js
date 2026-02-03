@@ -1,49 +1,24 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+let currentPage = 0;
+const pages = document.querySelector(".pages");
+const song = document.getElementById("song");
 
-.container {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+let startX = 0;
 
-h1 {
-  color: #ff4d6d;
-}
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
 
-.subtitle {
-  color: #555;
-  margin-bottom: 20px;
-}
+document.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50 && currentPage < 2) {
+    currentPage++;
+    pages.style.transform = `translateX(-${currentPage * 100}vw)`;
+    if (currentPage === 1) song.play();
+  }
+});
 
-#message-box {
-  min-height: 60px;
-  margin: 15px 0;
-  font-size: 18px;
-}
-
-button {
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
+function celebrate() {
+  document.getElementById("finalText").innerHTML =
+    "🎉 Happy Birthday Manya 💖<br>With lots of love, smiles & celebrations 🪩✨";
+  document.body.style.background = "#ffb6c1";
 }
