@@ -1,50 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Manya 🎂</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Manya 🤍</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffe5ec,#fff1e6,#ffffff);
+  font-family:'Poppins',sans-serif;
+}
+
+/* VFX */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* CONTAINER */
+.container{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  z-index:1;
+}
+
+/* PAGE */
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:30px;
+  opacity:0;
+  transform:scale(0.95);
+  transition:all 1s ease;
+}
+
+.page.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* TEXT */
+h1,h2{
+  font-family:'Playfair Display',serif;
+  color:#6b3f3f;
+  margin-bottom:14px;
+}
+
+p{
+  color:#7a4a4a;
+  font-size:17px;
+  margin:6px 0;
+}
+
+/* FADE */
+.fade{
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeUp 1.2s forwards;
+}
+.delay1{animation-delay:.6s}
+.delay2{animation-delay:1.2s}
+.delay3{animation-delay:1.8s}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* 3D BUTTON */
+.next-btn{
+  position:absolute;
+  bottom:35px;
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff,#f3d6da);
+  box-shadow:0 18px 30px rgba(255,160,170,.45),
+             inset 0 -6px 10px rgba(0,0,0,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  cursor:pointer;
+  animation:pulse 2.2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+
+/* COLLAGE */
+.collage{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  max-width:420px;
+  width:100%;
+}
+
+.card{
+  background:rgba(255,255,255,.75);
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 18px 35px rgba(255,170,180,.35);
+}
+
+.card img{
+  width:100%;
+  border-radius:16px;
+  margin-bottom:10px;
+}
+
+.card p{
+  font-size:15px;
+  font-style:italic;
+}
+
+/* CAKE */
+.cake{
+  font-size:75px;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
+
 <canvas id="vfx"></canvas>
-<div class="pages">
 
-  <!-- PAGE 1 : MESSAGES -->
-  <section class="page page1">
-    <h1>Hey Manya 💖</h1>
-    <p class="msg">This little space is made just for you ✨</p>
-    <p class="msg">Manya, you have the rare magic of making everything feel lighter 🌸</p>
-    <p class="msg">Never stop being the beautiful soul you are 💫</p>
-    <p class="msg">Today is all about YOU 🎉</p>
-    <span class="swipe">Swipe ➡️</span>
-  </section>
+<!-- MUSIC (plays from start till end) -->
+<audio id="song" src="blue.mp3" autoplay loop></audio>
 
-  <!-- PAGE 2 : PHOTOS + MUSIC -->
-  <section class="page page2">
-    <h2>Memories with You 📸</h2>
+<div class="container">
 
-    <div class="gallery">
-      <img src="photo1.jpg.jpeg" />
-      <img src="photo2.jpg.jpeg" />
-      <img src="photo3.jpg.jpeg" />
-      <img src="photo4.jpg.jpeg" />
-      <img src="photo5.jpg.jpeg" />
+<!-- PAGE 1 -->
+<section class="page active">
+  <h1 class="fade">Happy Birthday Manya 🤍</h1>
+  <p class="fade delay1">This little space is made just for you</p>
+  <p class="fade delay2">Soft moments, calm love & pretty memories ✨</p>
+  <p class="fade delay3">You truly make everything warmer</p>
+  <div class="next-btn" onclick="nextPage()">→</div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page">
+  <h2 class="fade">Little Moments 🌸</h2>
+
+  <div class="collage fade delay1">
+    <div class="card">
+      <img src="photo1.jpg.jpeg">
+      <p>Manya, your smile makes ordinary days feel special ✨</p>
     </div>
 
-    <audio id="song" src="blue.mp3"></audio>
-    <span class="swipe">Swipe ➡️</span>
-  </section>
+    <div class="card">
+      <img src="photo2.jpg.jpeg">
+      <p>You carry such a calm and beautiful energy 🤍</p>
+    </div>
 
-  <!-- PAGE 3 : CAKE + CELEBRATION -->
-  <section class="page page3">
-    <h2>Make a Wish 🎂</h2>
-    <div class="cake" onclick="celebrate()">🕯️🎂</div>
-    <p id="finalText"></p>
-  </section>
+    <div class="card">
+      <img src="photo3.jpg.jpeg">
+      <p>Moments feel softer when they have you in them 🌸</p>
+    </div>
+
+    <div class="card">
+      <img src="photo4.jpg.jpeg">
+      <p>You make memories warm even after time passes 💫</p>
+    </div>
+
+    <div class="card">
+      <img src="photo5.jpg.jpeg">
+      <p>Never forget how effortlessly lovely you are 🕊️</p>
+    </div>
+  </div>
+
+  <div class="next-btn" onclick="nextPage()">→</div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page">
+  <h2 class="fade">Make a Wish 🎂</h2>
+  <div class="cake fade delay1" onclick="celebrate()">🕯️🎂</div>
+  <p id="finalText" class="fade delay2"></p>
+</section>
 
 </div>
 
-<script src="script.js"></script>
+<script>
+/* PAGE LOGIC */
+const pages=document.querySelectorAll(".page");
+let current=0;
+
+function nextPage(){
+  if(current<pages.length-1){
+    pages[current].classList.remove("active");
+    current++;
+    pages[current].classList.add("active");
+  }
+}
+
+function celebrate(){
+  document.getElementById("finalText").innerHTML=
+  "🎉 Happy Birthday Manya 🤍<br>May your life glow with love, softness & magic ✨";
+}
+
+/* VFX */
+const c=document.getElementById("vfx");
+const ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
+
+const particles=[];
+for(let i=0;i<60;i++){
+  particles.push({
+    x:Math.random()*c.width,
+    y:Math.random()*c.height,
+    r:Math.random()*3+1,
+    d:Math.random()*0.6+0.2
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="rgba(255,190,200,.7)";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y-=p.d;
+    if(p.y<0)p.y=c.height;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.onresize=()=>{
+  c.width=innerWidth;
+  c.height=innerHeight;
+};
+</script>
+
 </body>
 </html>
