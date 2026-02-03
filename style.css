@@ -1,19 +1,24 @@
-const messages = [
-  "Hey 👋",
-  "Today is a special day 🎉",
-  "You make people around you happier 💖",
-  "Never forget how amazing you are ✨",
-  "Happy Birthday 🎂💫"
-];
+let currentPage = 0;
+const pages = document.querySelector(".pages");
+const song = document.getElementById("song");
 
-let index = 0;
+let startX = 0;
 
-function nextMessage() {
-  const messageEl = document.getElementById("message");
-  messageEl.innerText = messages[index];
-  index++;
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
 
-  if (index === messages.length) {
-    index = 0;
+document.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50 && currentPage < 2) {
+    currentPage++;
+    pages.style.transform = `translateX(-${currentPage * 100}vw)`;
+    if (currentPage === 1) song.play();
   }
+});
+
+function celebrate() {
+  document.getElementById("finalText").innerHTML =
+    "🎉 Happy Birthday Manya 💖<br>With lots of love, smiles & celebrations 🪩✨";
+  document.body.style.background = "#ffb6c1";
 }
