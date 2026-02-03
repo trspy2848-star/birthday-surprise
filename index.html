@@ -16,14 +16,15 @@ body{
   font-family:'Poppins',sans-serif;
 }
 
-/* VFX CANVAS */
+/* FIX 1: canvas should not block clicks */
 canvas{
   position:fixed;
   inset:0;
   z-index:0;
+  pointer-events:none;
 }
 
-/* MAIN CONTAINER */
+/* CONTAINER */
 .container{
   position:relative;
   width:100vw;
@@ -64,7 +65,7 @@ p{
   margin:6px 0;
 }
 
-/* FADE IN */
+/* FADE */
 .fade{
   opacity:0;
   transform:translateY(20px);
@@ -78,7 +79,7 @@ p{
   to{opacity:1;transform:translateY(0)}
 }
 
-/* 3D NEXT BUTTON */
+/* 3D BUTTON */
 .next-btn{
   position:absolute;
   bottom:35px;
@@ -102,7 +103,7 @@ p{
   100%{transform:scale(1)}
 }
 
-/* PHOTO COLLAGE */
+/* COLLAGE */
 .collage{
   display:flex;
   flex-direction:column;
@@ -116,7 +117,6 @@ p{
   border-radius:20px;
   padding:12px;
   box-shadow:0 18px 35px rgba(255,170,180,.35);
-  backdrop-filter:blur(6px);
 }
 
 .card img{
@@ -160,8 +160,8 @@ p{
 
 <canvas id="vfx"></canvas>
 
-<!-- 🎵 MUSIC (FIXED NAME) -->
-<audio id="song" src="blue.mp3.mp3" autoplay loop></audio>
+<!-- AUDIO -->
+<audio id="song" src="blue.mp3.mp3" loop></audio>
 
 <div class="container">
 
@@ -177,15 +177,13 @@ p{
 <!-- PAGE 2 -->
 <section class="page">
   <h2 class="fade">Little Moments 🌸</h2>
-
   <div class="collage fade delay1">
-    <div class="card"><img src="photo1.jpg.jpeg"><p>Manya, your smile makes ordinary days special ✨</p></div>
-    <div class="card"><img src="photo2.jpg.jpeg"><p>You carry a calm, beautiful energy 🤍</p></div>
-    <div class="card"><img src="photo3.jpg.jpeg"><p>Moments feel softer with you 🌸</p></div>
-    <div class="card"><img src="photo4.jpg.jpeg"><p>You make memories warm 💫</p></div>
-    <div class="card"><img src="photo5.jpg.jpeg"><p>Never forget how lovely you are 🕊️</p></div>
+    <div class="card"><img src="photo1.jpg.jpeg"><p>Your smile makes days special ✨</p></div>
+    <div class="card"><img src="photo2.jpg.jpeg"><p>So calm, so beautiful 🤍</p></div>
+    <div class="card"><img src="photo3.jpg.jpeg"><p>Everything feels softer 🌸</p></div>
+    <div class="card"><img src="photo4.jpg.jpeg"><p>Memories stay warm 💫</p></div>
+    <div class="card"><img src="photo5.jpg.jpeg"><p>Always lovely 🕊️</p></div>
   </div>
-
   <div class="next-btn" onclick="nextPage()">→</div>
 </section>
 
@@ -200,11 +198,16 @@ p{
 </div>
 
 <script>
-/* PAGE CONTROL */
 const pages=document.querySelectorAll(".page");
 let current=0;
+let musicStarted=false;
+const song=document.getElementById("song");
 
 function nextPage(){
+  if(!musicStarted){
+    song.play();
+    musicStarted=true;
+  }
   if(current<pages.length-1){
     pages[current].classList.remove("active");
     current++;
@@ -216,64 +219,44 @@ let burst=false;
 
 function celebrate(){
   document.getElementById("finalText").innerHTML=
-  "🎉 Happy Birthday Manya 🤍<br>May your life be filled with love, light & magic ✨";
-
+  "🎉 Happy Birthday Manya 🤍<br>May your life be filled with love & magic ✨";
   setTimeout(()=>{
     document.getElementById("signature").innerHTML="— with love, always 🤍";
     document.getElementById("signature").style.opacity=1;
   },1200);
-
   burst=true;
 }
 
-/* HEART + CONFETTI VFX */
+/* HEART VFX */
 const c=document.getElementById("vfx");
 const ctx=c.getContext("2d");
 c.width=innerWidth;
 c.height=innerHeight;
-
 const particles=[];
 
 function spawn(){
   particles.push({
     x:Math.random()*c.width,
     y:c.height+20,
-    s:Math.random()*20+10,
-    vy:Math.random()*1+0.5,
-    type:Math.random()>0.5?"heart":"dot"
+    r:Math.random()*3+2,
+    v:Math.random()*1+0.5
   });
-}
-
-function drawHeart(x,y,s){
-  ctx.beginPath();
-  ctx.moveTo(x,y);
-  ctx.bezierCurveTo(x-s,y-s,x-2*s,y+s,x,y+2*s);
-  ctx.bezierCurveTo(x+2*s,y+s,x+s,y-s,x,y);
-  ctx.fill();
 }
 
 function animate(){
   ctx.clearRect(0,0,c.width,c.height);
   ctx.fillStyle="rgba(255,160,180,.7)";
-
   if(Math.random()<0.3) spawn();
-
   particles.forEach((p,i)=>{
-    if(p.type==="heart") drawHeart(p.x,p.y,p.s/6);
-    else ctx.fillRect(p.x,p.y,p.s/6,p.s/6);
-
-    p.y-=p.vy*(burst?4:1);
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y-=p.v*(burst?4:1);
     if(p.y<0) particles.splice(i,1);
   });
-
   requestAnimationFrame(animate);
 }
 animate();
-
-window.onresize=()=>{
-  c.width=innerWidth;
-  c.height=innerHeight;
-};
 </script>
 
 </body>
