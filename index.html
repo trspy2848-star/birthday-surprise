@@ -3,22 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
+  <title>Happy Birthday Manya 🎂</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="container">
-    <h1>🎂 Happy Birthday!</h1>
-    <p class="subtitle">I made this just for you 💖</p>
+<div class="pages">
 
-    <div id="message-box">
-      <p id="message">Tap the button for a surprise 👇</p>
+  <!-- PAGE 1 -->
+  <section class="page page1">
+    <div class="hearts"></div>
+    <h1>Hey Manya 💖</h1>
+    <p class="msg">This little space is made just for you ✨</p>
+    <p class="msg">You make moments warmer and smiles brighter 🌸</p>
+    <p class="msg">Never forget how special you truly are 💫</p>
+    <span class="swipe">Swipe ➡️</span>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="page page2">
+    <h2>Memories with You 📸</h2>
+
+    <div class="gallery">
+      <img src="photo1.jpg" />
+      <img src="photo2.jpg" />
+      <img src="photo3.jpg" />
+      <img src="photo4.jpg" />
+      <img src="photo5.jpg" />
     </div>
 
-    <button onclick="nextMessage()">Next 💌</button>
-  </div>
+    <audio id="song" src="blue.mp3"></audio>
+    <span class="swipe">Swipe ➡️</span>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- PAGE 3 -->
+  <section class="page page3">
+    <h2>Make a Wish 🎂</h2>
+    <div class="cake" onclick="celebrate()">🕯️🎂</div>
+    <p id="finalText"></p>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
