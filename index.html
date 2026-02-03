@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Manya 🤍</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -113,10 +112,11 @@ p{
 }
 
 .card{
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.78);
   border-radius:20px;
   padding:12px;
   box-shadow:0 18px 35px rgba(255,170,180,.35);
+  backdrop-filter:blur(6px);
 }
 
 .card img{
@@ -134,6 +134,13 @@ p{
 .cake{
   font-size:75px;
   cursor:pointer;
+  animation:glow 2s infinite;
+}
+
+@keyframes glow{
+  0%{filter:drop-shadow(0 0 0 rgba(255,150,180,0))}
+  50%{filter:drop-shadow(0 0 20px rgba(255,150,180,.8))}
+  100%{filter:drop-shadow(0 0 0 rgba(255,150,180,0))}
 }
 </style>
 </head>
@@ -142,7 +149,7 @@ p{
 
 <canvas id="vfx"></canvas>
 
-<!-- MUSIC (plays from start till end) -->
+<!-- MUSIC -->
 <audio id="song" src="blue.mp3" autoplay loop></audio>
 
 <div class="container">
@@ -161,30 +168,11 @@ p{
   <h2 class="fade">Little Moments 🌸</h2>
 
   <div class="collage fade delay1">
-    <div class="card">
-      <img src="photo1.jpg.jpeg">
-      <p>Manya, your smile makes ordinary days feel special ✨</p>
-    </div>
-
-    <div class="card">
-      <img src="photo2.jpg.jpeg">
-      <p>You carry such a calm and beautiful energy 🤍</p>
-    </div>
-
-    <div class="card">
-      <img src="photo3.jpg.jpeg">
-      <p>Moments feel softer when they have you in them 🌸</p>
-    </div>
-
-    <div class="card">
-      <img src="photo4.jpg.jpeg">
-      <p>You make memories warm even after time passes 💫</p>
-    </div>
-
-    <div class="card">
-      <img src="photo5.jpg.jpeg">
-      <p>Never forget how effortlessly lovely you are 🕊️</p>
-    </div>
+    <div class="card"><img src="photo1.jpg.jpeg"><p>Manya, your smile makes ordinary days special ✨</p></div>
+    <div class="card"><img src="photo2.jpg.jpeg"><p>You carry a calm, beautiful energy 🤍</p></div>
+    <div class="card"><img src="photo3.jpg.jpeg"><p>Moments feel softer with you 🌸</p></div>
+    <div class="card"><img src="photo4.jpg.jpeg"><p>You make memories warm 💫</p></div>
+    <div class="card"><img src="photo5.jpg.jpeg"><p>Never forget how lovely you are 🕊️</p></div>
   </div>
 
   <div class="next-btn" onclick="nextPage()">→</div>
@@ -200,7 +188,7 @@ p{
 </div>
 
 <script>
-/* PAGE LOGIC */
+/* PAGE CONTROL */
 const pages=document.querySelectorAll(".page");
 let current=0;
 
@@ -214,35 +202,51 @@ function nextPage(){
 
 function celebrate(){
   document.getElementById("finalText").innerHTML=
-  "🎉 Happy Birthday Manya 🤍<br>May your life glow with love, softness & magic ✨";
+  "🎉 Happy Birthday Manya 🤍<br>May your life be filled with love, light & magic ✨";
+  burst=true;
 }
 
-/* VFX */
+/* HEART + CONFETTI VFX */
 const c=document.getElementById("vfx");
 const ctx=c.getContext("2d");
 c.width=innerWidth;
 c.height=innerHeight;
 
+let burst=false;
 const particles=[];
-for(let i=0;i<60;i++){
+
+function spawn(){
   particles.push({
     x:Math.random()*c.width,
-    y:Math.random()*c.height,
-    r:Math.random()*3+1,
-    d:Math.random()*0.6+0.2
+    y:c.height+20,
+    s:Math.random()*20+10,
+    vy:Math.random()*1+0.5,
+    type:Math.random()>0.5?"heart":"dot"
   });
+}
+
+function drawHeart(x,y,s){
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.bezierCurveTo(x-s,y-s,x-2*s,y+s,x,y+2*s);
+  ctx.bezierCurveTo(x+2*s,y+s,x+s,y-s,x,y);
+  ctx.fill();
 }
 
 function animate(){
   ctx.clearRect(0,0,c.width,c.height);
-  ctx.fillStyle="rgba(255,190,200,.7)";
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y-=p.d;
-    if(p.y<0)p.y=c.height;
+  ctx.fillStyle="rgba(255,160,180,.7)";
+
+  if(Math.random()<0.3) spawn();
+
+  particles.forEach((p,i)=>{
+    if(p.type==="heart") drawHeart(p.x,p.y,p.s/6);
+    else ctx.fillRect(p.x,p.y,p.s/6,p.s/6);
+
+    p.y-=p.vy*(burst?4:1);
+    if(p.y<0) particles.splice(i,1);
   });
+
   requestAnimationFrame(animate);
 }
 animate();
