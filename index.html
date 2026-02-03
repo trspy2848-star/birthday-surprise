@@ -16,14 +16,14 @@ body{
   font-family:'Poppins',sans-serif;
 }
 
-/* VFX */
+/* VFX CANVAS */
 canvas{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
-/* CONTAINER */
+/* MAIN CONTAINER */
 .container{
   position:relative;
   width:100vw;
@@ -64,7 +64,7 @@ p{
   margin:6px 0;
 }
 
-/* FADE */
+/* FADE IN */
 .fade{
   opacity:0;
   transform:translateY(20px);
@@ -78,7 +78,7 @@ p{
   to{opacity:1;transform:translateY(0)}
 }
 
-/* 3D BUTTON */
+/* 3D NEXT BUTTON */
 .next-btn{
   position:absolute;
   bottom:35px;
@@ -102,7 +102,7 @@ p{
   100%{transform:scale(1)}
 }
 
-/* COLLAGE */
+/* PHOTO COLLAGE */
 .collage{
   display:flex;
   flex-direction:column;
@@ -160,8 +160,8 @@ p{
 
 <canvas id="vfx"></canvas>
 
-<!-- MUSIC (plays from start till end) -->
-<audio id="song" src="blue.mp3" autoplay loop></audio>
+<!-- 🎵 MUSIC (FIXED NAME) -->
+<audio id="song" src="blue.mp3.mp3" autoplay loop></audio>
 
 <div class="container">
 
