@@ -142,6 +142,17 @@ p{
   50%{filter:drop-shadow(0 0 20px rgba(255,150,180,.8))}
   100%{filter:drop-shadow(0 0 0 rgba(255,150,180,0))}
 }
+
+/* SIGNATURE */
+#signature{
+  margin-top:18px;
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:#8b5a5a;
+  opacity:0;
+  transition:opacity 1.5s ease;
+  font-style:italic;
+}
 </style>
 </head>
 
@@ -149,7 +160,7 @@ p{
 
 <canvas id="vfx"></canvas>
 
-<!-- MUSIC -->
+<!-- MUSIC (plays from start till end) -->
 <audio id="song" src="blue.mp3" autoplay loop></audio>
 
 <div class="container">
@@ -183,6 +194,7 @@ p{
   <h2 class="fade">Make a Wish 🎂</h2>
   <div class="cake fade delay1" onclick="celebrate()">🕯️🎂</div>
   <p id="finalText" class="fade delay2"></p>
+  <p id="signature"></p>
 </section>
 
 </div>
@@ -200,9 +212,17 @@ function nextPage(){
   }
 }
 
+let burst=false;
+
 function celebrate(){
   document.getElementById("finalText").innerHTML=
   "🎉 Happy Birthday Manya 🤍<br>May your life be filled with love, light & magic ✨";
+
+  setTimeout(()=>{
+    document.getElementById("signature").innerHTML="— with love, always 🤍";
+    document.getElementById("signature").style.opacity=1;
+  },1200);
+
   burst=true;
 }
 
@@ -212,7 +232,6 @@ const ctx=c.getContext("2d");
 c.width=innerWidth;
 c.height=innerHeight;
 
-let burst=false;
 const particles=[];
 
 function spawn(){
